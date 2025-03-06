@@ -1,0 +1,95 @@
+pc-a=2001:DB8:1:10::10/64
+DG.=FE80::1
+pc-b=2001:DB8:1:11::11/64
+FE80::1
+server=2001:DB8:1:30::30
+FE80::3
+
+◼ Configure Router: 
+Step 1: Configure secret on router 
+Execute command on all routers 
+R(config)# enable secret enpa55 
+
+Step 2: Assign static ipv6 address 
+R1(config)# int gig0/0 
+ ipv6 address 2001:DB8:1:10::1/64 
+ ipv6 address FE80::1 link-local 
+ no shut  
+
+R1(config)# int gig0/1 
+ ipv6 address 2001:DB8:1:11::1/64 
+ ipv6 address FE80::1 link-local 
+ no shut 
+
+R1(config)# int se0/1/0 
+ ipv6 address 2001:DB8:1:1::1/64 
+ ipv6 address FE80::1 link-local 
+no shut 
+
+R2(config)# int se0/1/0 
+ ipv6 address 2001:DB8:1:1::2/64 
+ipv6 address FE80::2 link-local 
+ no shut 
+
+R2(config)# int se0/1/1
+ ipv6 address 2001:DB8:1:2::2/64 
+ ipv6 address FE80::2 link-local 
+ no shut 
+
+R3(config)# int gig0/0 
+ ipv6 address 2001:DB8:1:30::1/64 
+ ipv6 address FE80::3 link-local 
+ no shut 
+
+R3(config)# int se0/1/0 
+ ipv6 address 2001:DB8:1:2::1/64 
+ipv6 address FE80::3 link-local 
+no shut 
+
+Step 3: Enable IPv6 routing 
+R1(config)# ipv6 unicast-routing 
+ipv6 route 2001:DB8:1:2::0/64 2001:DB8:1:1::2 
+ipv6 route 2001:DB8:1:30::0/64 2001:DB8:1:1::2
+
+R2(config)# ipv6 unicast-routing  
+ipv6 route 2001:DB8:1:10::0/64 2001:DB8:1:1::1 
+ ipv6 route 2001:DB8:1:11::0/64 2001:DB8:1:1::1 
+ ipv6 route 2001:DB8:1:30::0/64 2001:DB8:1:2::1 
+ 
+R3(config)# ipv6 unicast-routing 
+ ipv6 route 2001:DB8:1:10::0/64 2001:DB8:1:2::2 
+ ipv6 route 2001:DB8:1:11::0/64 2001:DB8:1:2::2
+ ipv6 route 2001:DB8:1:1::0/64 2001:DB8:1:2::2 
+ 
+Step 4: Verify connectivity 
+PC1> ping 2001:DB8:1:30::30 
+(Successful) 
+PC2> ping 2001:DB8:1:30::30 
+(Successful) 
+
+Part 2: Configure, Apply, and Verify an IPv6 ACL 
+Step 1: Configure an ACL that will block HTTP and HTTPS access.
+
+R1(config)# ipv6 access-list BLOCK_HTTP 
+ deny tcp any host 2001:DB8:1:30::30 eq www 
+ deny tcp any host 2001:DB8:1:30::30 eq 443 
+ permit ipv6 any any 
+ exit 
+ 
+Step 2: Apply the ACL to the correct interface. 
+R1(config)# int gig0/1 
+ ipv6 traffic-filter BLOCK_HTTP in 
+ 
+Step 3: Verify the ACL implementation 
+Open a web browser to the PC1 to display the web page. 
+Desktop->Web Browser->http://2001:DB8:1:30::30 
+(Successful) 
+Desktop->Web Browser->https://2001:DB8:1:30::30 
+(Successful)
+Open a web browser to the PC2 to display the web page. 
+Desktop->Web Browser->http://2001:DB8:1:30::30 
+(Unsuccessful) – Request Timeout 
+Desktop->Web Browser->https://2001:DB8:1:30::30 
+(Unsuccessful) – Request Timeout 
+PC2> ping 2001:DB8:1:30::30 
+(Successful) 

@@ -32,4 +32,4 @@ ipv6 traffic-filter BLOCK_ICMP out
 a. Ping from PC2 to 2001:DB8:1:30::30. The ping should fail.  
 b. Ping from PC1 to 2001:DB8:1:30::30. The ping should fail.  
 Open the web browser of PC1 to http://2001:DB8:1:30::30 or https://2001:DB8:1:30::30. The website 
-should display.)
+should display.

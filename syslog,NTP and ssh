@@ -1,6 +1,6 @@
 Configure Routers for Syslog, NTP and SSH 
 operation
-part 1
+part 1:
 Step 1:
 (for all routers)
 line vty 0 4
@@ -63,7 +63,7 @@ R3
 (for all routers)
 R# show ip ospf interface
 
-part 2
+part 2Configure NTP 
 
 Step 1: Enable NTP authentication on PC-A. 
 a. 
@@ -119,7 +119,7 @@ service timestamps log datetime msec
 R3
 service timestamps log datetime msec
 
-Part 3: 
+Part 3: Configure Routers to Log Messages to the Syslog Server 
 R1 -logging host 192.168.1.6 
 R2- logging host 192.168.1.6  
 R3 -logging host 192.168.1.6

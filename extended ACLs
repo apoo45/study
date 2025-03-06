@@ -11,7 +11,7 @@ Step 2: Apply the ACL on the correct interface to filter traffic.
 From R1’s perspective, the traffic that ACL 100 applies to is inbound from the network connected to Gigabit 
 Ethernet 0/0 interface. Enter interface configuration mode and apply the ACL.  
 R1(config)# interface gigabitEthernet 0/0 
-R1(config-if)# ip access-group 100 in
+ ip access-group 100 in
 
 Step 3:Verify the ACL implementation.  
 a. Ping from PC1 to Server. If the pings are unsuccessful, verify the IP addresses before continuing.  
@@ -31,7 +31,7 @@ permit icmp 172.22.34.96 0.0.0.15 host 172.22.34.62
  
 step 2
 R1(config)# interface gigabitEthernet 0/1  
-R1(config-if)# ip access-group HTTP_ONLY in
+ ip access-group HTTP_ONLY in
 
 step 3: Verify the ACL implementation.  
 a. Ping from PC2 to Server. The ping should be successful, if the ping is unsuccessful, verify the IP 

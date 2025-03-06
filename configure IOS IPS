@@ -29,6 +29,7 @@ router ospf 1
  network 10.2.2.0 0.0.0.3 area 0 
  network 192.168.3.0 0.0.0.255 area 0 
 
+Part 1:Enable IOS IPS
 R1
 R1# show version 
 R1(config)# license boot module c1900 technology-package securityk9
@@ -60,6 +61,8 @@ R1# show ip ips all
 (Click the Syslog server->Services tab-> SYSLOG 
 (Output))
 
+
+part 2: Modify the Signature 
 R1
  ip ips signature-definition 
  signature 2004 0 

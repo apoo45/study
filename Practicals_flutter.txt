@@ -1,0 +1,685 @@
+Practical 1
+Aim : Introduction to Flutter, create new project, Simple “Hello world” program.
+body: Center(
+child: Column(
+mainAxisAlignment: MainAxisAlignment.center,
+children: <Widget>[
+const Text(
+'Hello World',
+),
+Text(
+'$_counter',
+style: Theme.of(context).textTheme.headlineMedium,
+),
+],
+),
+),
+
+Practical 2
+Aim : Widgets : Center, Container, InkWell, Row, Column.
+Center widget : 
+Code :
+body: Center(
+child: Text('Welcome'),
+),
+
+Container widget :
+Code:
+body: Container(
+height: 200,
+width: 200,
+color: Colors.red,
+),
+
+InkWell widget:
+Code:
+body: InkWell(
+child: Container(
+width: 200,
+height: 200,
+color: Colors.orangeAccent,
+),
+onTap: () {
+return print('You clicked on container widget');
+},
+),
+
+Row:
+Code :
+body: Row(
+children: [
+Text('one '),
+Text('two '),
+Text('three '),
+Text('four '),
+Text('five '),
+Text('six'),
+],
+),
+
+Column:
+Code:
+body: Column(
+children: [
+Text('one '),
+Text('two '),
+Text('three '),
+Text('four '),
+Text('five '),
+Text('six'),
+],
+),
+
+Add image in project folder and display it on screen.
+Create new folder with name ‘asset’
+- Add image with .jpg or .png extension in that folder by dragging it inside the asset folder
+- Open pugspec.yaml file and remove the comments of line number 63 and 64 and save file.
+   assets:
+     -asset/
+- In main.dart file inside body, type code for image widget and add path inside image widget.
+body: Image.asset('asset/flower.jpg'),
+
+Practical 3
+Aim : Demonstration of SingleChildScrollView, ListView, ListView.builder and 
+GridView widgets.
+SinglechildScrollView:
+Code :
+body: SingleChildScrollView(
+child: Column(children: [
+Container(
+height: 200,
+color: Colors.red,
+),
+Container(
+height: 200,
+color: Colors.green,
+),
+Container(
+height: 200,
+color: Colors.blue,
+),
+Container(
+height: 200,
+color: Colors.black,
+),
+Container(
+height: 200,
+color: Colors.grey,
+),
+]),
+),
+
+ListView:
+Code:
+body: ListView(
+children: [
+Text('one'),
+Text('two'),
+Text('three'),
+Text('four'),
+Text('five'),
+Text('six'),
+],
+),
+
+ListView.builder:
+Code:
+@override
+Widget build(BuildContext context) {
+var arrName = ['fifth', 'first', 'ninth', 'second', 'eight'];
+return Scaffold(
+appBar: AppBar(
+title: Text(widget.title),
+),
+body: ListView.builder(
+itemBuilder: (context, index) {
+return Text(arrName[index]);
+},
+itemCount: arrName.length,
+),
+);
+}
+
+GridView:
+Code :
+body: GridView.count(
+crossAxisCount: 3,
+children: [
+Container(
+height: 200,
+color: Colors.red,
+),
+Container(
+height: 200,
+color: Colors.green,
+),
+Container(
+height: 200,
+color: Colors.blue,
+),
+Container(
+height: 200,
+color: Colors.black,
+),
+Container(
+height: 200,
+color: Colors.grey,
+),
+Container(
+height: 200,
+color: Colors.green,
+),
+Container(
+height: 200,
+color: Colors.blue,
+),
+],
+),
+
+Practical 4
+Aim: Create simple ui of login page using TextField widget and Elevated button.
+Code:
+body: Column(
+children: [
+TextField(
+decoration: InputDecoration(hintText: 'Enter your email'),
+),
+TextField(
+decoration: InputDecoration(hintText: 'Enter your passwrod'),
+),
+ElevatedButton(
+onPressed: () {
+return print('You clicked on login button');
+},
+child: Text('Login'))
+],
+),
+
+Practical 5
+Aim : Program to Navigate from one page to another page.
+Steps: 
+- create a file with name ‘FirstScreen.dart’
+FirstScreen.dart:
+import 'main.dart';
+import 'package:flutter/material.dart';
+class FirstScreen extends StatelessWidget {
+@override
+Widget build(BuildContext context) {
+// TODO: implement build
+return Scaffold(
+body: Center(
+child: ElevatedButton(
+onPressed: () {
+Navigator.push(context, MaterialPageRoute(builder: (context) {
+return MyHomePage(title: 'welcome');
+}));
+},
+child: Text('click here'),
+),
+));
+}
+}
+-In main.dart set home: FirstScreen()(1line)
+class MyApp extends StatelessWidget {
+const MyApp({super.key});
+@override
+Widget build(BuildContext context) {
+return MaterialApp(
+title: 'Flutter Demo',
+theme: ThemeData(
+primarySwatch: Colors.blue,
+),
+home: FirstScreen(),
+);
+}
+}
+
+Practical 6
+Aim : Program to Passing data from one page to another page.
+Code:
+Main.dart:
+import 'package:flutter/material.dart';
+import 'SecondScreen.dart';
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}):super(key:key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Passing Data Example',
+      theme: ThemeData(
+       primarySwatch:Colors.blue,
+      ),
+      home:FirstScreen(),
+    );
+  }
+}
+
+class FirstScreen extends StatefulWidget {
+  FirstScreen({Key?key}):super(key:key);
+
+  final TextEditingController nameController=TextEditingController();
+
+  @override
+  Widget build(BuildContext context){
+    return Scaffold(appBar: AppBar(title:const Text('FirstScreen')),
+ body: Center(
+child: Column(
+mainAxisAlignment: MainAxisAlignment.center,
+children: [
+TextField(
+decoration: const InputDecoration(hintText: 'Enter text here'),
+controller: nameController,
+),
+
+ElevatedButton(
+onPressed: () {
+Navigator.push(context, MaterialPageRoute(builder: (context) {
+return SecondScreen(nameController.text.toString());
+}));
+},
+child: const Text('click here'))
+],
+),
+ ),
+    );
+  }
+}
+
+
+
+Practical 7
+Aim : Create BottomNavigationBar, TabBar and Navigation Drawer in flutter.
+BottomNavigationBar :
+Code:
+import 'package:flutter/material.dart';
+void main() {
+runApp(const MyApp());
+}
+class MyApp extends StatelessWidget {
+const MyApp({super.key});
+// This widget is the root of your application.
+@override
+Widget build(BuildContext context) {
+return MaterialApp(
+title: 'Flutter Demo',
+theme: ThemeData(
+primarySwatch: Colors.blue,
+),
+home: MyHomePage(),
+);
+}
+}
+class MyHomePage extends StatefulWidget {
+@override
+State<StatefulWidget> createState() {
+// TODO: implement createState
+return BottomNavigation();
+}
+}
+class BottomNavigation extends State<MyHomePage> {
+var selectedItem = 0;
+List itemList = [Text('Home'), Text('Bookmark'), Text('Settings')];
+void updateItem(int value) {
+setState(() {
+selectedItem = value;
+});
+}
+@override
+Widget build(BuildContext context) {
+// TODO: implement build
+return Scaffold(
+bottomNavigationBar: BottomNavigationBar(
+items: [
+BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+BottomNavigationBarItem(
+icon: Icon(Icons.bookmark), label: 'Bookmark'),
+BottomNavigationBarItem(
+icon: Icon(Icons.settings), label: 'Settings'),
+],
+currentIndex: selectedItem,
+onTap: updateItem,
+),
+body: Center(child: itemList[selectedItem]),
+);
+}
+}
+
+
+TabBar:
+Code :
+Main.dart
+import 'package:flutter/material.dart';
+void main() {
+runApp(const MyApp());
+}
+class MyApp extends StatelessWidget {
+const MyApp({super.key});
+// This widget is the root of your application.
+@override
+Widget build(BuildContext context) {
+return MaterialApp(
+title: 'Flutter Demo',
+theme: ThemeData(
+primarySwatch: Colors.blue,
+),
+home: MyHomePage(),
+);
+}
+}
+class MyHomePage extends StatefulWidget {
+@override
+State<StatefulWidget> createState() {
+// TODO: implement createState
+return BottomNavigation();
+}
+}
+class BottomNavigation extends State<MyHomePage> {
+@override
+Widget build(BuildContext context) {
+// TODO: implement build
+return DefaultTabController(
+length: 3,
+child: Scaffold(
+appBar: AppBar(
+title: Text('Welcome'),
+bottom: TabBar(
+tabs: [
+Tab(
+icon: Icon(Icons.home),
+text: 'Home',
+),
+Tab(
+icon: Icon(Icons.bookmark),
+text: 'Bookmark',
+),
+Tab(
+icon: Icon(Icons.call),
+text: 'call',
+),
+],
+),
+),
+body: TabBarView(children: [
+Center(child: Text('Home')),
+Center(child: Text('Bookmark')),
+Center(child: Text('Call')),
+]),
+));
+}
+}
+
+Navigation drawer :
+Code :
+MyHeaderDrawer.dart
+import 'package:flutter/material.dart';
+class MyHeaderDrawer extends StatefulWidget {
+@override
+State<StatefulWidget> createState() {
+// TODO: implement createState
+return _MyHeaderDrawer();
+}
+}
+class _MyHeaderDrawer extends State<MyHeaderDrawer> {
+@override
+Widget build(BuildContext context) {
+// TODO: implement build
+return Container(
+margin: EdgeInsets.all(4),
+child: Center(
+child: Column(children: [
+Image.network(
+'https://www.google.com/imgres?q=business%20manager&imgurl=https%3A%2F%2Fsundancecollege.com%2Fwp-content%2Fuploads%2F2024%2F09%2Fprofessional-business-manager-working-on-project-with-laptop-768x399.webp&imgrefurl=https%3A%2F%2Fsundancecollege.com%2Fblog%2Fwhat-does-a-business-manager-do%2F&docid=zDeJJw83fwU0IM&tbnid=l-Mm_gwgYI_csM&vet=12ahUKEwjWucrkjtSLAxWtcGwGHZgHHIAQM3oECBkQAA..i&w=768&h=399&hcb=2&ved=2ahUKEwjWucrkjtSLAxWtcGwGHZgHHIAQM3oECBkQAA'),
+Text('user name'),
+Text('user@gmail.com')
+]),
+));
+}
+}
+
+Main.dart:
+import 'dart:async';
+import 'dart:html';
+import 'MyHeaderDrawer.dart';
+import 'package:flutter/material.dart';
+void main() {
+runApp(const MyApp());
+}
+class MyApp extends StatelessWidget {
+const MyApp({super.key});
+@override
+Widget build(BuildContext context) {
+return MaterialApp(
+title: 'Flutter Demo',
+theme: ThemeData(
+primarySwatch: Colors.blue,
+),
+home: MyHomePage(),
+);
+}
+}
+class MyHomePage extends StatefulWidget {
+@override
+State<StatefulWidget> createState() {
+// TODO: implement createState
+return _HomePage();
+}
+}
+class _HomePage extends State<MyHomePage> {
+var currentPage = DrawerSection.home;
+@override
+Widget build(BuildContext context) {
+// TODO: implement build
+return Scaffold(
+appBar: AppBar(
+title: Text('welcome'),
+),
+body: Center(
+child: Text('hello'),
+),
+drawer: Drawer(
+child: SingleChildScrollView(
+child: Column(children: [MyHeaderDrawer(), MyDrawerList()]),
+)),
+);
+}
+Widget MyDrawerList() {
+return Container(
+child: Column(children: [
+menuItem(1, "home", Icons.home,
+currentPage == DrawerSection.home ? true : false),
+menuItem(2, "contacts", Icons.contact_page,
+currentPage == DrawerSection.contacts ? true : false),
+menuItem(3, "notifications", Icons.notifications,
+currentPage == DrawerSection.notifications ? true : false),
+menuItem(4, "settings", Icons.settings,
+currentPage == DrawerSection.settings ? true : false),
+]),
+);
+}
+Widget menuItem(int id, String title, IconData icon, bool selected) {
+return Material(
+color: selected ? Colors.grey[300] : Colors.transparent,
+child: InkWell(
+onTap: () {
+Navigator.pop(context);
+setState(() {
+if (id == 1) {
+currentPage = DrawerSection.home;
+} else if (id == 2) {
+currentPage = DrawerSection.contacts;
+} else if (id == 3) {
+currentPage = DrawerSection.notifications;
+} else if (id == 4) {
+currentPage = DrawerSection.settings;
+}
+});
+},
+child: Row(children: [
+Icon(
+icon,
+color: Colors.black,
+),
+Text(title),
+]),
+),
+);
+}
+}
+enum DrawerSection {
+home,
+contacts,
+notifications,
+settings,
+}
+
+
+Practical 8
+Aim : Create Pop up menu/ DropDown menu and AlertDialog in flutter
+Pop up menu/ DropDown menu
+Code :
+import 'package:flutter/material.dart';
+void main() {
+runApp(const MyApp());
+}
+class MyApp extends StatelessWidget {
+const MyApp({super.key});
+// This widget is the root of your application.
+@override
+Widget build(BuildContext context) {
+return MaterialApp(
+title: 'Flutter Demo',
+theme: ThemeData(
+primarySwatch: Colors.blue,
+),
+home: MyHomePage(),
+);
+}
+}
+class MyHomePage extends StatefulWidget {
+@override
+State<StatefulWidget> createState() {
+// TODO: implement createState
+return PopUpMenu();
+}
+}
+class PopUpMenu extends State<MyHomePage> {
+@override
+Widget build(BuildContext context) {
+// TODO: implement build
+return Scaffold(
+appBar: AppBar(actions: [
+PopupMenuButton(
+itemBuilder: (context) => [
+PopupMenuItem(
+child: Row(
+children: [
+Icon(
+Icons.share,
+color: Colors.black,
+),
+Text('share')
+],
+)),
+PopupMenuItem(
+child: Row(
+children: [
+Icon(
+Icons.download,
+color: Colors.black,
+),
+Text('Downloads')
+],
+)),
+PopupMenuItem(
+child: Row(
+children: [
+Icon(
+Icons.save,
+color: Colors.black,
+),
+Text('save')
+],
+)),
+PopupMenuItem(
+child: Row(
+children: [
+Icon(
+Icons.settings,
+color: Colors.black,
+),
+Text('settings')
+],
+)),
+],
+child: Icon(Icons.more_vert),
+)
+]),
+);
+}
+}
+
+AlertDialog:
+Code:
+import 'package:flutter/material.dart';
+void main() {
+runApp(const MyApp());
+}
+class MyApp extends StatelessWidget {
+const MyApp({super.key});
+// This widget is the root of your application.
+@override
+Widget build(BuildContext context) {
+return MaterialApp(
+debugShowCheckedModeBanner: false,
+title: 'Flutter Demo',
+theme: ThemeData(
+primarySwatch: Colors.blue,
+),
+home: MyHomePage(),
+);
+}
+}
+class MyHomePage extends StatefulWidget {
+@override
+State<StatefulWidget> createState() {
+// TO DO: implement createState
+return _MyHomePage();
+}
+}
+class _MyHomePage extends State<MyHomePage> {
+@override
+Widget build(BuildContext context) {
+// TODO: implement build
+return Scaffold(
+appBar: AppBar(
+title: Text('hello TYIT'),
+),
+body: Center(
+child: ElevatedButton(
+onPressed: () {
+showDialog(
+context: context,
+builder: (context) {
+return Container(
+child: AlertDialog(actions: [
+Title(color: Colors.red, child: Text('Email sent')),
+TextButton(
+onPressed: () {
+Navigator.pop(context);
+},
+child: Text('ok'))
+]),
+);
+});
+},
+child: Text('send email'),
+),
+),
+);
+}
+}
